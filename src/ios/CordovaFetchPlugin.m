@@ -16,9 +16,10 @@
   NSString *method = [command.arguments objectAtIndex:0];
   NSString *urlString = [command.arguments objectAtIndex:1];
   NSDictionary *parameters = [command.arguments objectAtIndex:2];
+  NSDictionary *headers = [command.arguments objectAtIndex:3];
 
   CordovaFetchPlugin* __weak weakSelf = self;
-  NSURLSessionDataTask *dataTask = [[BaseClient sharedClient] dataTaskWithHTTPMethod:method URLString:urlString parameters:parameters success:^(NSURLSessionDataTask *task, id responseObject) {
+  NSURLSessionDataTask *dataTask = [[BaseClient sharedClient] dataTaskWithHTTPMethod:method URLString:urlString parameters:parameters headers:headers success:^(NSURLSessionDataTask *task, id responseObject) {
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
 
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];

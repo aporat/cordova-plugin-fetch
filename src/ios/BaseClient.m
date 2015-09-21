@@ -17,9 +17,9 @@
   if (!self) {
     return nil;
   }
-
+  
   self.responseSerializer = [AFHTTPResponseSerializer serializer];
-
+  
   return self;
 }
 
@@ -28,7 +28,8 @@
 
 - (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
                                        URLString:(NSString *)URLString
-                                      parameters:(id)parameters
+                                      parameters:(NSDictionary *)parameters
+                                         headers:(NSDictionary *)headers
                                          success:(void (^)(NSURLSessionDataTask *, id))success
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *, id))failure
 {
@@ -44,6 +45,12 @@
       });
 #pragma clang diagnostic pop
     }
+    
+    for (NSString *key in headers) {
+      NSString *value = headers[key];
+      [request setValue:value forHTTPHeaderField:key];
+    }
+    
     
     return nil;
   }
