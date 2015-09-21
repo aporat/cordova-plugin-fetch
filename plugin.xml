@@ -41,7 +41,7 @@ SOFTWARE.
     <!-- ios -->
     <platform name="ios">
         <js-module src="www/fetch-ios.js" name="CordovaFetchPlugin">
-            <clobbers target="cordovaFetch" />
+            <clobbers target="fetch" />
         </js-module>
 
         <config-file target="config.xml" parent="/*">

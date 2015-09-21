@@ -30,7 +30,7 @@
     }
     
     if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-      [dictionary setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"data"];
+      [dictionary setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"statusText"];
     }
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dictionary];
@@ -48,10 +48,10 @@
     [dictionary setObject:[error localizedDescription] forKey:@"error"];
     
     if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-      [dictionary setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"data"];
+      [dictionary setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"statusText"];
     }
     
-    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dictionary];
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dictionary];
     [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
   }];
   
