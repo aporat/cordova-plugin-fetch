@@ -1,5 +1,4 @@
 #import "CordovaFetchPlugin.h"
-#import "CDVFile.h"
 #import "BaseClient.h"
 
 @interface CordovaFetchPlugin()
