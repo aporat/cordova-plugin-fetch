@@ -28,14 +28,14 @@
 
 - (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
                                        URLString:(NSString *)URLString
-                                      parameters:(NSDictionary *)parameters
-                                         headers:(NSDictionary *)headers
+                                      parameters:(id)parameters
+                                         headers:(id)headers
                                          success:(void (^)(NSURLSessionDataTask *, id))success
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *, id))failure
 {
   
   NSError *serializationError = nil;
-  NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:&serializationError];
+  NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:nil error:&serializationError];
   if (serializationError) {
     if (failure) {
 #pragma clang diagnostic push
@@ -48,7 +48,10 @@
     
     for (NSString *key in headers) {
       NSString *value = headers[key];
-      [request setValue:value forHTTPHeaderField:key];
+
+        if (value != nil) {
+          [request setValue : value forHTTPHeaderField : key];
+        }
     }
     
     

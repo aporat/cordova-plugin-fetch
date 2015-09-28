@@ -311,7 +311,7 @@
         // todo - return network errors / timeouts
         reject(new TypeError('Network request failed'))
 
-      }, "CordovaFetchPlugin", "fetch", [request.method, request.url, {}, {}]);
+      }, "CordovaFetchPlugin", "fetch", [request.method, request.url, typeof request._bodyInit === 'undefined' ? null : request._bodyInit, request.headers]);
     })
   }
   self.fetch.polyfill = true
