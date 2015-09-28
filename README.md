@@ -12,3 +12,14 @@ HTTP networking plugin that brings the [whatwg fetch spec](https://fetch.spec.wh
 # License
 
 MIT
+
+## Installation
+
+The plugin conforms to the Cordova plugin specification, it can be installed
+using the Cordova / Phonegap command line interface.
+
+    phonegap plugin add https://github.com/aporat/cordova-plugin-fetch.git
+
+    cordova plugin add https://github.com/aporat/cordova-plugin-fetch.git
+
+## Usage
