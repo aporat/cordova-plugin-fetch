@@ -18,6 +18,11 @@
     return nil;
   }
   
+  
+  self.requestSerializer = [AFHTTPRequestSerializer serializer];
+  [self.requestSerializer setQueryStringSerializationWithBlock:^NSString *(NSURLRequest *request, id parameters, NSError *__autoreleasing *error) {
+    return parameters;
+  }];
   self.responseSerializer = [AFHTTPResponseSerializer serializer];
   
   return self;
@@ -35,7 +40,12 @@
 {
   
   NSError *serializationError = nil;
-  NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:nil error:&serializationError];
+  
+  if (parameters == nil || [parameters isKindOfClass:[NSNull class]]) {
+    parameters = @"";
+  }
+  
+  NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:&serializationError];
   if (serializationError) {
     if (failure) {
 #pragma clang diagnostic push
@@ -46,16 +56,17 @@
 #pragma clang diagnostic pop
     }
     
-    for (NSString *key in headers) {
-      NSString *value = headers[key];
-
-        if (value != nil) {
-          [request setValue : value forHTTPHeaderField : key];
-        }
-    }
-    
-    
     return nil;
+  }
+  
+  if (headers != nil) {
+  for (NSString *key in headers) {
+    NSArray *value = headers[key];
+    
+    if (value != nil && value[0] != nil && key != nil) {
+      [request setValue:value[0] forHTTPHeaderField:key];
+    }
+  }
   }
   
   __block NSURLSessionDataTask *dataTask = nil;

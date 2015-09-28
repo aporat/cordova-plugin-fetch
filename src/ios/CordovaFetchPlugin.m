@@ -15,18 +15,13 @@
 }
 
 - (void)fetch:(CDVInvokedUrlCommand *)command {
-  NSString *method = [command.arguments objectAtIndex:0];
-  NSString *urlString = [command.arguments objectAtIndex:1];
-  id parameters = [command.arguments objectAtIndex:2];
-  NSDictionary *headers = [command.arguments objectAtIndex:3];
+  NSString *method = [command argumentAtIndex:0];
+  NSString *urlString = [command argumentAtIndex:1];
+  id parameters = [command argumentAtIndex:2];
+  NSDictionary *headers = [command argumentAtIndex:3];
 
-  NSLog(@"got method %@", [method description]);
-  NSLog(@"got urlString %@", [urlString description]);
-  NSLog(@"got params %@", [parameters description]);
-  NSLog(@"got headers map %@", [headers[@"map"] description]);
-  
   CordovaFetchPlugin* __weak weakSelf = self;
-  NSURLSessionDataTask *dataTask = [[BaseClient sharedClient] dataTaskWithHTTPMethod:method URLString:urlString parameters:nil headers:headers[@"map"] success:^(NSURLSessionDataTask *task, id responseObject) {
+  NSURLSessionDataTask *dataTask = [[BaseClient sharedClient] dataTaskWithHTTPMethod:method URLString:urlString parameters:parameters headers:headers[@"map"] success:^(NSURLSessionDataTask *task, id responseObject) {
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
     
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
