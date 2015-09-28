@@ -85,6 +85,9 @@ SOFTWARE.
         <header-file src="src/ios/AFNetworking/AFURLSessionManager.h" />
         <source-file src="src/ios/AFNetworking/AFURLSessionManager.m" />
 
+        <header-file src="src/ios/AFNetworkActivityLogger/AFNetworkActivityLogger.h" />
+        <source-file src="src/ios/AFNetworkActivityLogger/AFNetworkActivityLogger.m" />
+
         <framework src="Security.framework" />
         <framework src="SystemConfiguration.framework" />
     </platform>
