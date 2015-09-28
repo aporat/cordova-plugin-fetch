@@ -1,4 +1,6 @@
-# cordova-plugin-fetch
+# cordova-plugin-fetch (alpha)
+
+THIS IS A DEVELOPMENT PREVIEW - DO NOT USE IT IN PRODUCTION!
 
 HTTP networking plugin that brings the [whatwg fetch spec](https://fetch.spec.whatwg.org/) standard to Cordova
 
