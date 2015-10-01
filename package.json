@@ -1,0 +1,32 @@
+{
+  name: "cordova-plugin-fetch",
+  description: "HTTP networking plugin that brings the fetch() standard to Cordova",
+  version: "1.0.0",
+  homepage: "https://github.com/aporat/cordova-plugin-fetch#readme",
+  repository: {
+    type: "git",
+    url: "git@github.com:aporat/cordova-plugin-fetch.git"
+  },
+  bugs: {
+    url: "https://github.com/aporat/cordova-plugin-fetch/issues"
+  },
+  cordova: {
+    id: "phonegap-plugin-fetch",
+    platforms: [
+      "ios"
+    ]
+  },
+  keywords: [
+    "ecosystem:cordova",
+    "ecosystem:phonegap",
+    "cordova-ios"
+  ],
+  engines: [
+    {
+      name: "cordova",
+      version: ">=3.0.0"
+    }
+  ],
+  author: "Adar Porat",
+  license: "MIT"
+}
