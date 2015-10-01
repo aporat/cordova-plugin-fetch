@@ -3,7 +3,7 @@
 #import <Cordova/CDVPlugin.h>
 #import <Cordova/CDVJSON.h>
 
-@interface CordovaFetchPlugin : CDVPlugin
+@interface FetchPlugin : CDVPlugin
 
 - (void)fetch:(CDVInvokedUrlCommand *)command;
 

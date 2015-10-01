@@ -1,13 +1,13 @@
-#import "CordovaFetchPlugin.h"
+#import "FetchPlugin.h"
 #import "BaseClient.h"
 #import "AFNetworkActivityLogger.h"
 
-@interface CordovaFetchPlugin()
+@interface FetchPlugin()
 
 @end
 
 
-@implementation CordovaFetchPlugin
+@implementation FetchPlugin
 
 - (void)pluginInitialize {
   
@@ -20,7 +20,7 @@
   id parameters = [command argumentAtIndex:2];
   NSDictionary *headers = [command argumentAtIndex:3];
 
-  CordovaFetchPlugin* __weak weakSelf = self;
+  FetchPlugin* __weak weakSelf = self;
   NSURLSessionDataTask *dataTask = [[BaseClient sharedClient] dataTaskWithHTTPMethod:method URLString:urlString parameters:parameters headers:headers[@"map"] success:^(NSURLSessionDataTask *task, id responseObject) {
     NSHTTPURLResponse *response = (NSHTTPURLResponse *)task.response;
     

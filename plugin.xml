@@ -40,18 +40,18 @@ SOFTWARE.
 
     <!-- ios -->
     <platform name="ios">
-        <js-module src="www/fetch-ios.js" name="CordovaFetchPlugin">
+        <js-module src="www/fetch-ios.js" name="FetchPlugin">
             <clobbers target="cordovaFetch" />
         </js-module>
 
         <config-file target="config.xml" parent="/*">
-            <feature name="CordovaFetchPlugin">
-                <param name="ios-package" value="CordovaFetchPlugin"/>
+            <feature name="FetchPlugin">
+                <param name="ios-package" value="FetchPlugin"/>
             </feature>
         </config-file>
 
-        <header-file src="src/ios/CordovaFetchPlugin.h" />
-        <source-file src="src/ios/CordovaFetchPlugin.m" />
+        <header-file src="src/ios/FetchPlugin.h" />
+        <source-file src="src/ios/FetchPlugin.m" />
 
         <header-file src="src/ios/BaseClient.h" />
         <source-file src="src/ios/BaseClient.m" />
