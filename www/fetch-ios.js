@@ -1,7 +1,13 @@
+/* global cordova:false */
+
 (function() {
   'use strict';
 
-  var exec = require('cordova/exec');
+
+  /*!
+   * Module dependencies.
+   */
+  var exec = cordova.require('cordova/exec');
 
   function normalizeName(name) {
     if (typeof name !== 'string') {
@@ -278,11 +284,13 @@
 
   Body.call(Response.prototype)
 
-  self.Headers = Headers;
-  self.Request = Request;
-  self.Response = Response;
+  var cordovaFetch = {};
 
-  self.fetch = function(input, init) {
+  cordovaFetch.Headers = Headers;
+  cordovaFetch.Request = Request;
+  cordovaFetch.Response = Response;
+
+  cordovaFetch.fetch = function(input, init) {
     var request
     if (Request.prototype.isPrototypeOf(input) && !init) {
       request = input
@@ -303,20 +311,21 @@
           status: status,
           statusText: response.statusText,
           headers: response.headers,
-         // url: responseURL()
+          url: response.url
         }
 
-        resolve(response);
+        resolve(options);
       }, function(response) {
-        // todo - return network errors / timeouts
         reject(new TypeError('Network request failed'))
 
       }, "FetchPlugin", "fetch", [request.method, request.url, typeof request._bodyInit === 'undefined' ? null : request._bodyInit, request.headers]);
     })
   }
-  self.fetch.polyfill = true
 
-  module.exports = self.fetch;
+  cordovaFetch.fetch.polyfill = true
+
+  module.exports = cordovaFetch.fetch;
+
 })();
 
 
