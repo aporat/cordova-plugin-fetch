@@ -62,7 +62,7 @@
     
     [dictionary setObject:[error localizedDescription] forKey:@"error"];
 
-    if (error != nil && responseObject != nil) {
+    if (error != nil && responseObject == nil) {
       CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dictionary];
       [pluginResult setKeepCallbackAsBool:YES];
       [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
