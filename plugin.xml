@@ -21,7 +21,7 @@ SOFTWARE.
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
   id="cordova-plugin-fetch"
-  version="0.0.3">
+  version="0.0.4">
 
     <name>Cordova Fetch</name>
  
@@ -103,7 +103,7 @@ SOFTWARE.
 
         <source-file src="src/android/libs/okio-1.6.0.jar" target-dir="libs/" />
         <source-file src="src/android/libs/okhttp-2.5.0.jar" target-dir="libs/" />
-        <source-file src="src/android/com/adobe/phonegap/push/PushPlugin.java" target-dir="src/com/adobe/phonegap/fetch/" />
+        <source-file src="src/android/com/adobe/phonegap/fetch/FetchPlugin.java" target-dir="src/com/adobe/phonegap/fetch/" />
 
     </platform>
 
