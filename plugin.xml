@@ -38,13 +38,13 @@ SOFTWARE.
 
     <keywords>cordova,phonegap,fetch,http,networking</keywords>
 
+    <js-module src="www/fetch.js" name="FetchPlugin">
+        <clobbers target="cordovaFetch" />
+    </js-module>
+
     <!-- ios -->
     <platform name="ios">
-        <js-module src="www/fetch-ios.js" name="FetchPlugin">
-            <clobbers target="cordovaFetch" />
-        </js-module>
-
-        <config-file target="config.xml" parent="/*">
+    <config-file target="config.xml" parent="/*">
             <feature name="FetchPlugin">
                 <param name="ios-package" value="FetchPlugin"/>
             </feature>

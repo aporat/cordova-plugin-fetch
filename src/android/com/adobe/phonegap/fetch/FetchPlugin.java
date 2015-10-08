@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-public class FetchPlugin extends CordovaPlugin implements PushConstants {
+public class FetchPlugin extends CordovaPlugin {
 
     public static final String LOG_TAG = "FetchPlugin";
 
