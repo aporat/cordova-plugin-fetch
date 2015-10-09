@@ -1,51 +1,36 @@
 package com.adobe.phonegap.fetch;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.util.Log;
 
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.MediaType;
 
 import java.io.IOException;
-import java.lang.Exception;
-import java.util.Iterator;
 
 public class FetchPlugin extends CordovaPlugin {
 
     public static final String LOG_TAG = "FetchPlugin";
     private static CallbackContext callbackContext;
+
     private final OkHttpClient mClient = new OkHttpClient();
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-    /**
-     * Gets the application context from cordova's main activity.
-     * @return the application context
-     */
-    private Context getApplicationContext() {
-        return this.cordova.getActivity().getApplicationContext();
-    }
 
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
 
         if (action.equals("fetch")) {
-            Log.v(LOG_TAG, "execute: action = " + action);
-            Log.v(LOG_TAG, "execute: data = " + data.toString());
-
 
             try {
                 String method = data.getString(0);
@@ -61,8 +46,8 @@ public class FetchPlugin extends CordovaPlugin {
                 if (headers.has("map") && headers.getJSONObject("map") != null) {
                     headers = headers.getJSONObject("map");
                 }
-                Log.v(LOG_TAG, "execute: headers = " + headers.toString());
 
+                Log.v(LOG_TAG, "execute: headers = " + headers.toString());
 
                 Request.Builder requestBuilder = new Request.Builder();
 
@@ -104,7 +89,6 @@ public class FetchPlugin extends CordovaPlugin {
 
                         JSONObject result = new JSONObject();
                         try {
-
                             Headers responseHeaders = response.headers();
 
                             JSONObject allHeaders = new JSONObject();
@@ -116,17 +100,17 @@ public class FetchPlugin extends CordovaPlugin {
                             }
 
                             result.put("headers", allHeaders);
-
                             result.put("statusText", response.body().string());
+                            result.put("status", response.code());
+                            result.put("url", response.request().urlString());
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
                         Log.v(LOG_TAG, "returning: " + result.toString());
 
-
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
-
                     }
                 });
 
@@ -141,10 +125,6 @@ public class FetchPlugin extends CordovaPlugin {
             return false;
         }
 
-/*
-
-*/
         return true;
     }
-
 }
