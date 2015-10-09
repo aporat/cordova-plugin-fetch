@@ -13,17 +13,137 @@ import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.MediaType;
 
+import java.io.IOException;
+import java.lang.Exception;
 import java.util.Iterator;
 
 public class FetchPlugin extends CordovaPlugin {
 
     public static final String LOG_TAG = "FetchPlugin";
+    private static CallbackContext callbackContext;
+    private final OkHttpClient mClient = new OkHttpClient();
+    public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
+    /**
+     * Gets the application context from cordova's main activity.
+     * @return the application context
+     */
+    private Context getApplicationContext() {
+        return this.cordova.getActivity().getApplicationContext();
+    }
 
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
-        Log.v(LOG_TAG, "execute: action=" + action);
 
+        if (action.equals("fetch")) {
+            Log.v(LOG_TAG, "execute: action = " + action);
+            Log.v(LOG_TAG, "execute: data = " + data.toString());
+
+
+            try {
+                String method = data.getString(0);
+                Log.v(LOG_TAG, "execute: method = " + method.toString());
+
+                String urlString = data.getString(1);
+                Log.v(LOG_TAG, "execute: urlString = " + urlString.toString());
+
+                String body = data.getString(2);
+                Log.v(LOG_TAG, "execute: body = " + body.toString());
+
+                JSONObject headers = data.getJSONObject(3);
+                if (headers.has("map") && headers.getJSONObject("map") != null) {
+                    headers = headers.getJSONObject("map");
+                }
+                Log.v(LOG_TAG, "execute: headers = " + headers.toString());
+
+
+                Request.Builder requestBuilder = new Request.Builder();
+
+                // method + body
+                if (body != null) {
+                    requestBuilder.post(RequestBody.create(MEDIA_TYPE_MARKDOWN, body));
+                } else {
+                    requestBuilder.method(method, null);
+                }
+                // url
+                requestBuilder.url(urlString);
+
+                // headers
+                if (headers != null && headers.names() != null && headers.names().length() > 0) {
+                    for (int i = 0; i < headers.names().length(); i++) {
+
+                        String headerName = headers.names().getString(i);
+                        JSONArray headerValues = headers.getJSONArray(headers.names().getString(i));
+
+                        if (headerValues.length() > 0) {
+                            String headerValue = headerValues.getString(0);
+                            Log.v(LOG_TAG, "key = " + headerName + " value = " + headerValue);
+                            requestBuilder.addHeader(headerName, headerValue);
+                        }
+                    }
+                }
+
+                Request request = requestBuilder.build();
+
+                mClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Request request, IOException throwable) {
+                        throwable.printStackTrace();
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, throwable.getMessage()));
+                    }
+
+                    @Override
+                    public void onResponse(Response response) throws IOException {
+
+                        JSONObject result = new JSONObject();
+                        try {
+
+                            Headers responseHeaders = response.headers();
+
+                            JSONObject allHeaders = new JSONObject();
+
+                            if (responseHeaders != null ) {
+                                for (int i = 0; i < responseHeaders.size(); i++) {
+                                    allHeaders.put(responseHeaders.name(i), responseHeaders.value(i));
+                                }
+                            }
+
+                            result.put("headers", allHeaders);
+
+                            result.put("statusText", response.body().string());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.v(LOG_TAG, "returning: " + result.toString());
+
+
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
+
+                    }
+                });
+
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, "execute: Got JSON Exception " + e.getMessage());
+                callbackContext.error(e.getMessage());
+            }
+
+        } else {
+            Log.e(LOG_TAG, "Invalid action : " + action);
+            callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+            return false;
+        }
+
+/*
+
+*/
         return true;
     }
 
