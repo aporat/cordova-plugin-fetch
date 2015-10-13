@@ -25,7 +25,7 @@ public class FetchPlugin extends CordovaPlugin {
     private static CallbackContext callbackContext;
 
     private final OkHttpClient mClient = new OkHttpClient();
-    public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
+    public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
@@ -39,8 +39,8 @@ public class FetchPlugin extends CordovaPlugin {
                 String urlString = data.getString(1);
                 Log.v(LOG_TAG, "execute: urlString = " + urlString.toString());
 
-                String body = data.getString(2);
-                Log.v(LOG_TAG, "execute: body = " + body.toString());
+                String postBody = data.getString(2);
+                Log.v(LOG_TAG, "execute: postBody = " + postBody.toString());
 
                 JSONObject headers = data.getJSONObject(3);
                 if (headers.has("map") && headers.getJSONObject("map") != null) {
@@ -51,12 +51,13 @@ public class FetchPlugin extends CordovaPlugin {
 
                 Request.Builder requestBuilder = new Request.Builder();
 
-                // method + body
-                if (body != null) {
-                    requestBuilder.post(RequestBody.create(MEDIA_TYPE_MARKDOWN, body));
+                // method + postBody
+                if (postBody != null) {
+                    requestBuilder.post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody.toString()));
                 } else {
                     requestBuilder.method(method, null);
                 }
+
                 // url
                 requestBuilder.url(urlString);
 
