@@ -308,7 +308,7 @@
         }
 
         var options = {
-          status: status,
+          status: response.status,
           statusText: response.statusText,
           headers: response.headers,
           url: response.url
