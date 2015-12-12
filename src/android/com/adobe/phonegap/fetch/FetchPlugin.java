@@ -52,7 +52,7 @@ public class FetchPlugin extends CordovaPlugin {
                 Request.Builder requestBuilder = new Request.Builder();
 
                 // method + postBody
-                if (postBody != null) {
+                if (postBody != null && !postBody.equals("null")) {
                     requestBuilder.post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody.toString()));
                 } else {
                     requestBuilder.method(method, null);
