@@ -109,6 +109,7 @@ public class FetchPlugin extends CordovaPlugin {
                             e.printStackTrace();
                         }
 
+                        Log.v(LOG_TAG, "HTTP code: " + response.code());
                         Log.v(LOG_TAG, "returning: " + result.toString());
 
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, result));
