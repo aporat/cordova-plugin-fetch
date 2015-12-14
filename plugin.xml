@@ -56,9 +56,6 @@ SOFTWARE.
         <header-file src="src/ios/BaseClient.h" />
         <source-file src="src/ios/BaseClient.m" />
 
-        <header-file src="src/ios/AFNetworking/AFHTTPRequestOperation.h" />
-        <source-file src="src/ios/AFNetworking/AFHTTPRequestOperation.m" />
-
         <header-file src="src/ios/AFNetworking/AFHTTPRequestOperationManager.h" />
         <source-file src="src/ios/AFNetworking/AFHTTPRequestOperationManager.m" />
 
