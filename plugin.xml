@@ -56,12 +56,6 @@ SOFTWARE.
         <header-file src="src/ios/BaseClient.h" />
         <source-file src="src/ios/BaseClient.m" />
 
-        <header-file src="src/ios/AFNetworking/AFHTTPRequestOperation.h" />
-        <source-file src="src/ios/AFNetworking/AFHTTPRequestOperation.m" />
-
-        <header-file src="src/ios/AFNetworking/AFHTTPRequestOperationManager.h" />
-        <source-file src="src/ios/AFNetworking/AFHTTPRequestOperationManager.m" />
-
         <header-file src="src/ios/AFNetworking/AFHTTPSessionManager.h" />
         <source-file src="src/ios/AFNetworking/AFHTTPSessionManager.m" />
 
@@ -72,9 +66,6 @@ SOFTWARE.
 
         <header-file src="src/ios/AFNetworking/AFSecurityPolicy.h" />
         <source-file src="src/ios/AFNetworking/AFSecurityPolicy.m" />
-
-        <header-file src="src/ios/AFNetworking/AFURLConnectionOperation.h" />
-        <source-file src="src/ios/AFNetworking/AFURLConnectionOperation.m" />
 
         <header-file src="src/ios/AFNetworking/AFURLRequestSerialization.h" />
         <source-file src="src/ios/AFNetworking/AFURLRequestSerialization.m" />
