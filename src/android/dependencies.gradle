@@ -1,0 +1,11 @@
+apply plugin: 'maven'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.squareup.okhttp:okhttp:2.7.0'
+    compile 'com.squareup.okio:okio:1.6.0'
+}

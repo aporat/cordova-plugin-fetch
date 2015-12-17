@@ -86,14 +86,14 @@ SOFTWARE.
     <!-- android -->
     <platform name="android">
 
+        <framework src="src/android/dependencies.gradle" custom="true" type="gradleReference" />
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="FetchPlugin" >
                 <param name="android-package" value="com.adobe.phonegap.fetch.FetchPlugin"/>
             </feature>
         </config-file>
 
-        <source-file src="src/android/libs/okio-1.6.0.jar" target-dir="libs/" />
-        <source-file src="src/android/libs/okhttp-2.6.0.jar" target-dir="libs/" />
         <source-file src="src/android/com/adobe/phonegap/fetch/FetchPlugin.java" target-dir="src/com/adobe/phonegap/fetch/" />
 
     </platform>
