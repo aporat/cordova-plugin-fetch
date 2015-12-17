@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "AFNetworkActivityLogger.h"
-#import <AFNetworking/AFURLSessionManager.h>
+#import "AFURLSessionManager.h"
 #import <objc/runtime.h>
 
 static NSURLRequest * AFNetworkRequestFromNotification(NSNotification *notification) {
