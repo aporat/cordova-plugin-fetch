@@ -108,7 +108,8 @@ public class FetchPlugin extends CordovaPlugin {
                             }
 
                             result.put("headers", allHeaders);
-                            result.put("statusText", response.body().string());
+                            result.put("body", response.body().string());
+                            result.put("statusText", response.message());
                             result.put("status", response.code());
                             result.put("url", response.request().urlString());
 
