@@ -43,8 +43,8 @@
       [result setObject:response.URL.absoluteString forKey:@"url"];
     }
     
-    if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-      [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"statusText"];
+    if (responseObject != nil && [responseObject isKindOfClass:[NSData class]]) {
+      [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
     }
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
@@ -68,8 +68,8 @@
       [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 
     } else {
-      if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-        [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"statusText"];
+      if (responseObject != nil && [responseObject isKindOfClass:[NSData class]]) {
+        [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
       }
       
       CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
