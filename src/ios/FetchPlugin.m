@@ -44,7 +44,12 @@
     }
     
     if (responseObject != nil && [responseObject isKindOfClass:[NSData class]]) {
-      [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
+      @try {
+        [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
+      }
+      @catch(NSException *exception) {
+        
+      }
     }
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
