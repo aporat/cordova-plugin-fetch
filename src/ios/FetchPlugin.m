@@ -48,7 +48,9 @@
         [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
       }
       @catch(NSException *exception) {
-        
+        // We catch the exception and do nothing with it
+        // This is to prevent that, e.g., binary response data causes the app to crash.
+        // By catching and ignoring the exception, the behaviour is on par with Android's.
       }
     }
     
