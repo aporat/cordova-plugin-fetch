@@ -307,14 +307,7 @@
           return
         }
 
-        var options = {
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers,
-          url: response.url
-        }
-
-        resolve(options);
+        resolve(response);
       }, function(response) {
         reject(new TypeError('Network request failed'))
 

@@ -43,8 +43,15 @@
       [result setObject:response.URL.absoluteString forKey:@"url"];
     }
     
-    if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-      [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"statusText"];
+    if (responseObject != nil && [responseObject isKindOfClass:[NSData class]]) {
+      @try {
+        [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
+      }
+      @catch(NSException *exception) {
+        // We catch the exception and do nothing with it
+        // This is to prevent that, e.g., binary response data causes the app to crash.
+        // By catching and ignoring the exception, the behaviour is on par with Android's.
+      }
     }
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
@@ -68,8 +75,8 @@
       [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 
     } else {
-      if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-        [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"statusText"];
+      if (responseObject != nil && [responseObject isKindOfClass:[NSData class]]) {
+        [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
       }
       
       CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
