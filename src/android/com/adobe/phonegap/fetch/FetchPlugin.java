@@ -104,16 +104,9 @@ public class FetchPlugin extends CordovaPlugin {
 
                             if (responseHeaders != null ) {
                                 for (int i = 0; i < responseHeaders.size(); i++) {
-                                    if (allHeaders.has(responseHeaders.name(i))) {
-                                        Object intervention = allHeaders.get(responseHeaders.name(i));
-                                        if (intervention instanceof String) {
-                                            JSONArray innerArray = new JSONArray();
-                                            innerArray.put(((String) intervention));
-                                            innerArray.put(responseHeaders.value(i));
-                                            allHeaders.put(responseHeaders.name(i), innerArray);
-                                        } else if (intervention instanceof JSONArray) {
-                                            ((JSONArray) intervention).put(responseHeaders.value(i));
-                                        }
+                                    if (responseHeaders.name(i).compareToIgnoreCase("set-cookie") == 0 &&
+                                        allHeaders.has(responseHeaders.name(i))) {
+                                        allHeaders.put(responseHeaders.name(i), allHeaders.get(responseHeaders.name(i)) + ",\n" + responseHeaders.value(i));
                                         continue;
                                     }
                                     allHeaders.put(responseHeaders.name(i), responseHeaders.value(i));
