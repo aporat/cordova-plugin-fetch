@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 
 public class FetchPlugin extends CordovaPlugin {
 
@@ -26,6 +28,8 @@ public class FetchPlugin extends CordovaPlugin {
 
     private final OkHttpClient mClient = new OkHttpClient();
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
+
+    private static String CURRENT_PROXY = "";
 
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
@@ -84,6 +88,28 @@ public class FetchPlugin extends CordovaPlugin {
                 }
 
                 Request request = requestBuilder.build();
+
+                // check if proxy settings have changed
+                String proxyHost = System.getProperty("http.proxyHost");
+                String proxyPort = System.getProperty("http.proxyPort");
+                if(proxyHost == null) {
+                    proxyHost = "";
+                }
+                if(proxyPort == null) {
+                    proxyPort = "";
+                }
+                String identifier = proxyHost + ":" + proxyPort;
+                if(!FetchPlugin.CURRENT_PROXY.equals(identifier)) {
+                    FetchPlugin.CURRENT_PROXY = identifier;
+                    Log.v(LOG_TAG, "Proxy setting have changed");
+                    if(proxyHost.isEmpty()) {
+                        Log.v(LOG_TAG, "Clearing proxy");
+                        mClient.setProxy(null);
+                    } else {
+                        Log.v(LOG_TAG, "Setting proxy "+ proxyHost + ":" + proxyPort);
+                        mClient.setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(proxyHost, Integer.parseInt(proxyPort))));
+                    }
+                }
 
                 mClient.newCall(request).enqueue(new Callback() {
                     @Override

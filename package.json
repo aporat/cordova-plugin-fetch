@@ -10,5 +10,6 @@
     ]
   },
   "author": "Adar Porat",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }
