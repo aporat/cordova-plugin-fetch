@@ -274,7 +274,6 @@
 
     this._initBody(bodyInit)
     this.type = 'default'
-    this.url = null
     this.status = options.status
     this.ok = this.status >= 200 && this.status < 300
     this.statusText = options.statusText
@@ -314,7 +313,9 @@
           url: response.url
         }
 
-        resolve(options);
+        var fetchResponse = new Response(response.body, options)
+        resolve(fetchResponse);
+
       }, function(response) {
         reject(new TypeError('Network request failed'))
 
