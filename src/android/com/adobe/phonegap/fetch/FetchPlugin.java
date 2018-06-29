@@ -104,6 +104,11 @@ public class FetchPlugin extends CordovaPlugin {
 
                             if (responseHeaders != null ) {
                                 for (int i = 0; i < responseHeaders.size(); i++) {
+                                    if (responseHeaders.name(i).compareToIgnoreCase("set-cookie") == 0 &&
+                                        allHeaders.has(responseHeaders.name(i))) {
+                                        allHeaders.put(responseHeaders.name(i), allHeaders.get(responseHeaders.name(i)) + ",\n" + responseHeaders.value(i));
+                                        continue;
+                                    }
                                     allHeaders.put(responseHeaders.name(i), responseHeaders.value(i));
                                 }
                             }
