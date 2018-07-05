@@ -44,7 +44,12 @@
     }
     
     if (responseObject !=nil && [responseObject isKindOfClass:[NSData class]]) {
-      [result setObject:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding] forKey:@"body"];
+      NSString *body = [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+      if (body == nil) {
+          body = [responseObject base64EncodedStringWithOptions:0];
+          [result setObject:[NSNumber numberWithBool:true] forKey:@"isBlob"];
+      }
+      [result setObject:body forKey:@"body"];
     }
     
     CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:result];
