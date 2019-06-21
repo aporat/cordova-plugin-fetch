@@ -1,5 +1,6 @@
 package com.adobe.phonegap.fetch;
 
+import android.util.Base64;
 import android.util.Log;
 
 import com.squareup.okhttp.Callback;
@@ -115,7 +116,13 @@ public class FetchPlugin extends CordovaPlugin {
 
                             result.put("headers", allHeaders);
 
-                            result.put("body", response.body().string());
+                            if (response.body().contentType().type().equals("image")) {
+                                result.put("isBlob", true);
+                                result.put("body", Base64.encodeToString(response.body().bytes(), Base64.DEFAULT));
+                            } else {
+                                result.put("body", response.body().string());
+                            }
+
                             result.put("statusText", response.message());
                             result.put("status", response.code());
                             result.put("url", response.request().urlString());
