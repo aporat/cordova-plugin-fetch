@@ -29,7 +29,7 @@
   function Headers(headers) {
     this.map = {}
 
-    if (headers instanceof Headers) {
+    if (headers instanceof Headers || headers instanceof window.Headers) {
       headers.forEach(function(value, name) {
         this.append(name, value)
       }, this)
