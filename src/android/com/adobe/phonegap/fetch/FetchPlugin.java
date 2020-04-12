@@ -19,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class FetchPlugin extends CordovaPlugin {
 
@@ -27,6 +28,8 @@ public class FetchPlugin extends CordovaPlugin {
 
     private final OkHttpClient mClient = new OkHttpClient();
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
+
+    private static final long DEFAULT_TIMEOUT = 10;
 
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
@@ -143,12 +146,24 @@ public class FetchPlugin extends CordovaPlugin {
                 callbackContext.error(e.getMessage());
             }
 
-        } else {
+        } 
+        else if (action.equals("setTimeout")) {
+            this.setTimeout(data.optLong(0, DEFAULT_TIMEOUT));
+        }
+        else {
             Log.e(LOG_TAG, "Invalid action : " + action);
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
             return false;
         }
 
         return true;
+    }
+
+    private void setTimeout(long seconds) {
+        Log.v(LOG_TAG, "setTimeout: " + seconds.toString());
+
+        mClient.setConnectTimeout(seconds, TimeUnit.SECONDS);
+        mClient.setReadTimeout(seconds, TimeUnit.SECONDS);
+        mClient.setWriteTimeout(seconds, TimeUnit.SECONDS);
     }
 }

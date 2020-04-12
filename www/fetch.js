@@ -348,6 +348,14 @@
     })
   }
 
+  /**
+   * Set timeout of the underlying http request
+   * @param timeout in seconds
+   */
+  cordovaFetch.fetch.setTimeout = function(timeout) {
+    exec(null, null, "FetchPlugin", "setTimeout", [timeout]);
+  }
+
   cordovaFetch.fetch.polyfill = true
 
   module.exports = cordovaFetch.fetch;
