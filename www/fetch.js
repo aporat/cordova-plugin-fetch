@@ -29,7 +29,7 @@
   function Headers(headers) {
     this.map = {}
 
-    if (headers instanceof Headers) {
+    if (headers instanceof Headers || headers instanceof window.Headers) {
       headers.forEach(function(value, name) {
         this.append(name, value)
       }, this)
@@ -346,6 +346,14 @@
 
       }, "FetchPlugin", "fetch", [request.method, request.url, typeof request._bodyInit === 'undefined' ? null : request._bodyInit, request.headers]);
     })
+  }
+
+  /**
+   * Set timeout of the underlying http request
+   * @param timeout in seconds
+   */
+  cordovaFetch.fetch.setTimeout = function(timeout) {
+    exec(null, null, "FetchPlugin", "setTimeout", [timeout]);
   }
 
   cordovaFetch.fetch.polyfill = true
