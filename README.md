@@ -18,7 +18,7 @@ MIT
 The plugin conforms to the Cordova plugin specification, it can be installed
 using the Cordova / Phonegap command line interface.
 
-    cordova plugin add https://github.com/8bhsolutions/cordova-plugin-fetch.git
+    cordova plugin add https://github.com/aporat/cordova-plugin-fetch.git
 
 ## Usage
 
