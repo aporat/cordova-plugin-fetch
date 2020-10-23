@@ -324,12 +324,6 @@
     return new Promise(function(resolve, reject) {
 
       exec(function(response) {
-
-        if (response.status < 100 || response.status > 599) {
-          reject(new TypeError('Network request failed'))
-          return
-        }
-
         var options = {
           status: response.status,
           statusText: response.statusText,
@@ -342,7 +336,7 @@
         resolve(fetchResponse);
 
       }, function(response) {
-        reject(new TypeError('Network request failed'))
+        reject(new TypeError( response.toString() ));
 
       }, "FetchPlugin", "fetch", [request.method, request.url, typeof request._bodyInit === 'undefined' ? null : request._bodyInit, request.headers]);
     })

@@ -3,13 +3,14 @@ package com.adobe.phonegap.fetch;
 import android.util.Base64;
 import android.util.Log;
 
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.Call;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -26,7 +27,7 @@ public class FetchPlugin extends CordovaPlugin {
     public static final String LOG_TAG = "FetchPlugin";
     private static CallbackContext callbackContext;
 
-    private final OkHttpClient mClient = new OkHttpClient();
+    private OkHttpClient mClient = new OkHttpClient();
     public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
 
     private static final long DEFAULT_TIMEOUT = 10;
@@ -92,13 +93,13 @@ public class FetchPlugin extends CordovaPlugin {
 
                 mClient.newCall(request).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Request request, IOException throwable) {
+                    public void onFailure(Call call, IOException throwable) {
                         throwable.printStackTrace();
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, throwable.getMessage()));
                     }
 
                     @Override
-                    public void onResponse(Response response) throws IOException {
+                    public void onResponse(Call call, Response response) throws IOException {
 
                         JSONObject result = new JSONObject();
                         try {
@@ -128,7 +129,7 @@ public class FetchPlugin extends CordovaPlugin {
 
                             result.put("statusText", response.message());
                             result.put("status", response.code());
-                            result.put("url", response.request().urlString());
+                            result.put("url", response.request().url().toString());
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -162,8 +163,10 @@ public class FetchPlugin extends CordovaPlugin {
     private void setTimeout(long seconds) {
         Log.v(LOG_TAG, "setTimeout: " + seconds);
 
-        mClient.setConnectTimeout(seconds, TimeUnit.SECONDS);
-        mClient.setReadTimeout(seconds, TimeUnit.SECONDS);
-        mClient.setWriteTimeout(seconds, TimeUnit.SECONDS);
+	mClient = mClient.newBuilder()
+          .connectTimeout(seconds, TimeUnit.SECONDS)
+          .readTimeout(seconds, TimeUnit.SECONDS)
+          .writeTimeout(seconds, TimeUnit.SECONDS)
+	  .build();
     }
 }
