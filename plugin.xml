@@ -56,6 +56,8 @@ SOFTWARE.
         <header-file src="src/ios/BaseClient.h" />
         <source-file src="src/ios/BaseClient.m" />
 
+        <header-file src="src/ios/AFNetworking/AFCompatibilityMacros.h" />
+
         <header-file src="src/ios/AFNetworking/AFHTTPSessionManager.h" />
         <source-file src="src/ios/AFNetworking/AFHTTPSessionManager.m" />
 
