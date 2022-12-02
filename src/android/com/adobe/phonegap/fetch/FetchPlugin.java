@@ -120,7 +120,7 @@ public class FetchPlugin extends CordovaPlugin {
 
                             result.put("headers", allHeaders);
 
-                            if (response.body().contentType().type().equals("image")) {
+                            if (response.body().contentType() != null && response.body().contentType().type().equals("image")) {
                                 result.put("isBlob", true);
                                 result.put("body", Base64.encodeToString(response.body().bytes(), Base64.DEFAULT));
                             } else {
